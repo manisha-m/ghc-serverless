@@ -29,10 +29,6 @@ provider:
 
 # you can add statements to the Lambda function's IAM Role here
   iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
     - Effect: "Allow"
       Action:
         - "s3:ReadBucket"
@@ -43,12 +39,17 @@ provider:
       Action:
       - "SNS:Publish"
       Resource: "${self:custom.topic_arn}"
-
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
-#            - "/*"
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:Query"
+        - "dynamodb:Scan"
+        - "dynamodb:GetItem"
+        - "dynamodb:PutItem"
+        - "dynamodb:UpdateItem"
+      Resource: [
+          "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/Courses",
+          "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/Teacher"
+        ]
 
 custom:                                                                             
   region: ${opt:region, self:provider.region}                                       
