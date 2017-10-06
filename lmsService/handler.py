@@ -46,7 +46,7 @@ def notifier(event, context):
     db_client = boto3.client('dynamodb')
 
     c_item = db_client.get_item(
-                TableName='Courses',
+                TableName='Course',
                 Key={
                     'CourseId': {'S': course}
                     }
@@ -107,7 +107,7 @@ def updatedb(event, context):
     db_client = boto3.client('dynamodb')
 
     c_item = db_client.get_item(
-                TableName='Courses',
+                TableName='Course',
                 Key={
                     'CourseId': {'S': course}
                     }

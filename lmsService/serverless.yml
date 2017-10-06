@@ -47,7 +47,7 @@ provider:
         - "dynamodb:PutItem"
         - "dynamodb:UpdateItem"
       Resource: [
-          "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/Courses",
+          "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/Course",
           "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/Teacher"
         ]
 
@@ -161,12 +161,39 @@ functions:
 #      variable2: value2
 
 # you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
+resources:
+  Resources:
+    NewResource:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: sns-assignments
+        TopicName: sns-assignments
+    CourseTable:
+        Type: AWS::DynamoDB::Table
+        Properties:
+            TableName: Course
+            AttributeDefinitions:
+                - AttributeName: CourseId
+                  AttributeType: S
+            KeySchema:
+                - AttributeName: CourseId
+                  KeyType: HASH
+            ProvisionedThroughput:
+                ReadCapacityUnits: 1
+                WriteCapacityUnits: 1
+    TeacherTable:
+        Type: AWS::DynamoDB::Table
+        Properties:
+            TableName: Teacher
+            AttributeDefinitions:
+                - AttributeName: Id
+                  AttributeType: N
+            KeySchema:
+                - AttributeName: Id
+                  KeyType: HASH
+            ProvisionedThroughput:
+                ReadCapacityUnits: 1
+                WriteCapacityUnits: 1
 #  Outputs:
 #     NewOutput:
 #       Description: "Description for the output"
