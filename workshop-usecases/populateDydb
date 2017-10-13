@@ -1,0 +1,30 @@
+#!/bin/bash
+
+aws dynamodb put-item --table-name Course --item '{
+            "CourseId": {
+                "S": "PyBasic"
+            }, 
+            "TeacherId": {
+                "N": "300"
+            }, 
+            "Cost": {
+                "N": "1000"
+            }, 
+            "Title": {
+                "S": "Python Basic"
+            }
+        }
+'
+
+aws dynamodb put-item --table-name Teacher --item '{
+            "email": {
+                "S": "'$1'"
+            }, 
+            "Name": {
+                "S": "Manisha"
+            }, 
+            "Id": {
+                "N": "300"
+            }
+        } 
+'
