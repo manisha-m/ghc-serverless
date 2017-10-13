@@ -11,7 +11,7 @@
 #
 # Happy Coding!
 
-service: s3Service
+service: ghcdemoService
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -34,7 +34,7 @@ provider:
         - "s3:ReadBucket"
         - "s3:GetObject"
         - "s3:PutObject"
-      Resource: "arn:aws:s3:::ghcdemo-assignments"
+      Resource: "arn:aws:s3:::${self:custom.s3_bucket}"
     - Effect: "Allow"
       Action:
       - "SNS:Publish"
@@ -58,6 +58,8 @@ custom:
   topic_name: "sns-assignments"                          
   topic_arn:
       { "Fn::Join" : ["", ["arn:aws:sns:${self:custom.region}:", { "Ref" : "AWS::AccountId" }, ":${self:custom.topic_name}"] ]  }            
+
+  s3_bucket: "ghcdemo-manisha"
 
 # you can define service wide environment variables here
 #  environment:
@@ -94,7 +96,7 @@ functions:
        sns_topic_arn: ${self:custom.topic_arn}
      events:
       - s3:
-         bucket: ghcdemo-assignments
+         bucket: ${self:custom.s3_bucket}
          event: s3:ObjectCreated:*
          rules:
           - suffix: .py
