@@ -1,0 +1,12 @@
+- To deply the service, run serverless deploy
+   sls deploy
+- To populate DynamoDb tables with items needed for the workshop, run script populateDyDb with an email address
+   ./populateDyDb <email-address>
+- To check list of lambdas deployed, run aws cli:
+   aws lambda list-functions
+- To dump a particular DynamoDb table, run the script dumpDyDb
+  ./dumpDyDb Course 
+        Or
+  ./dumpDyDb Teacher
+- To upload a file to a particular bucket, run the script uploadFile with the bucketname and file name
+  ./uploadFile <bucketname> <filename>
