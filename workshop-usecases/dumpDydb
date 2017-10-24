@@ -1,3 +1,9 @@
 #!/bin/bash
 
+if [ $# -ne 1 ]
+then
+    echo "Usage: ./dumpDydb <table name>"
+    exit
+fi
+
 aws dynamodb scan --table-name $1

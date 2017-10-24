@@ -36,7 +36,7 @@ def notifier(event, context):
 
     # Get details from SNS message
     message = event['Records'][0]['Sns']['Message']
-    print("In updatedb, printing message", message)
+    print("In notifier, printing message", message)
 
     sub_msg = message.split('::')
     course = sub_msg[1].split(':')[1]

@@ -1,7 +1,7 @@
 - To deply the service, run serverless deploy
    sls deploy
 - To populate DynamoDb tables with items needed for the workshop, run script populateDyDb with an email address
-   ./populateDyDb <email-address>
+   ./populateDyDb <Teacher name> <email-address>
 - To check list of lambdas deployed, run aws cli:
    aws lambda list-functions
 - To dump a particular DynamoDb table, run the script dumpDyDb

@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [ $# -ne 2 ]
+then
+    echo "Usage: ./populateDydb <Teacher name> <email>"
+    exit
+fi
+
 aws dynamodb put-item --table-name Course --item '{
             "CourseId": {
                 "S": "PyBasic"
@@ -18,10 +24,10 @@ aws dynamodb put-item --table-name Course --item '{
 
 aws dynamodb put-item --table-name Teacher --item '{
             "email": {
-                "S": "'$1'"
+                "S": "'$2'"
             }, 
             "Name": {
-                "S": "Manisha"
+                "S": "'$1'"
             }, 
             "Id": {
                 "N": "300"
