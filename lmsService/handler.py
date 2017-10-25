@@ -113,7 +113,6 @@ def updatedb(event, context):
                     }
             )
     print("DB item received", json.dumps(c_item))
-    print(type(c_item['Item']['TeacherId']["N"]))
 
     # Update the ToDo attribute for the course Teacher
     updated_item = db_client.update_item(
@@ -131,4 +130,26 @@ def updatedb(event, context):
                 ReturnValues='UPDATED_NEW'
             )
     response= {}
+    return response
+
+
+def list_teacher_todos(event, context):
+    teacher_id = event['queryStringParameters']['teacher_id']
+    print("teacher id", teacher_id)
+    db_client = boto3.client('dynamodb')
+    
+    t_item = db_client.get_item(
+                TableName='Teacher',
+                Key={
+                    'Id': { 'N': teacher_id }
+                    }
+            )
+    
+    todo = { "ToDos": t_item['Item']['ToDo']['SS'] }
+    print("To do dict:", todo)
+    response = {
+        "statusCode": 200,
+        "body": json.dumps(todo)
+        }
+    
     return response

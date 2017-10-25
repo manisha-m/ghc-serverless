@@ -128,3 +128,24 @@ def updatedb(event, context):
             )
     response= {}
     return response
+
+def list_teacher_todos(event, context):
+    teacher_id = event['queryStringParameters']['teacher_id']
+    print("teacher id", teacher_id)
+    db_client = boto3.client('dynamodb')
+    
+    t_item = db_client.get_item(
+                TableName='Teacher',
+                Key={
+                    'Id': { 'N': teacher_id }
+                    }
+            )
+    
+    todo = { "ToDos": t_item['Item']['ToDo']['SS'] }
+    print("To do dict:", todo)
+    response = {
+        "statusCode": 200,
+        "body": json.dumps(todo)
+        }
+    
+    return response
